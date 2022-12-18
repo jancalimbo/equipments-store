@@ -1,8 +1,9 @@
 <div>
+   <div class="container mt-4">
     <div class="d-flex justify-content-between">
       <h1>Inventory</h1>
       <div class="btns">
-        <a class="btn btn-primary" href="{{ route('add-to-inventory') }}">
+        <a class="btn" style="background-color: #faa916; " href="{{ route('add-to-inventory') }}">
           <i class="fa-solid fa-plus"></i>
         </a>
       </div>
@@ -19,51 +20,55 @@
 
     <div class="container">
       <div id="" class="row">
-        <table class="table table-bordered table-striped table-responsive table-hover">
-          <thead>
-            <tr>
-              
-              <th>Photo</th>
-              <th>Name</th>
-              <th>Stocks</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($equipments as $eqpmt )
-            <tr>
-              
-              <td>
-                @php
-                  $images = App\Models\Image::where('code', $eqpmt->code)->get();
-                @endphp
+        @if ($equipments->count() == 0)
+          <h1 class="text-center">
+            No equipment in inventory yet
+          </h1>
 
-                @foreach ($images as $img)
-                <img id="" class="" src="{{ asset('uploads/all')}}/{{ $img->image }}" alt="">
-                @endforeach
-
-              </td>
-              <td>{{ $eqpmt->name }}</td>
-              <td>
-                {{ $eqpmt->stocks }}
-              </td>
-              <td>
-                {{ $eqpmt->description }}
-              </td>
-              <td>
-               
-                <a class="m-2 btn" href="{{url('/inventory/eqpmts/view',['eqpmt'=>$eqpmt->id]) }}"><i class="fa-solid fa-eye"></i>
-                </a>
-                <a href="{{url('/inventory/eqpmts/edit',['eqpmt'=>$eqpmt->id]) }}" class="m-2 btn">
-                  <i class="fa-solid fa-pen"></i> 
-                </a>
-                <a href="{{url('/inventory/eqpmts/delete',['eqpmt'=>$eqpmt->id]) }}" class="m-2 btn"><i class="fa-solid fa-trash"></i></a>
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
+          @else
+          <table class="table table-bordered table-striped table-responsive table-hover">
+            <thead class="bg-dark" style="color: #faa916">
+              <tr>
+                
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Stocks</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($equipments as $eqpmt )
+              <tr>
+                
+                <td class="d-flex justify-content-center">
+                  @php
+                    $images = App\Models\Image::where('code', $eqpmt->code)->get();
+                  @endphp
+  
+                  @foreach ($images as $img)
+                  <img id="" class="" src="{{ asset('uploads/all')}}/{{ $img->image }}" alt="">
+                  @endforeach
+  
+                </td>
+                <td>{{ $eqpmt->name }}</td>
+                <td>
+                  {{ $eqpmt->stocks }}
+                </td>
+                <td>
+                  {{ $eqpmt->description }}
+                </td>
+                <td>
+                  <a href="{{url('/equipments/update',['eqpmt'=>$eqpmt->id]) }}" class="m-2 btn  bg-dark">
+                    <i style="color: #faa916;" class="fa-solid fa-pen"></i> 
+                  </a>
+                  <a href="{{url('/equipments/delete',['eqpmt'=>$eqpmt->id]) }}" class="m-2 btn bg-dark"><i class="fa-solid fa-trash" style="color: #faa916;"></i></a>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        @endif
 
       </div>
 
@@ -73,9 +78,11 @@
     <style>
       img{
         height: 150px;
-        /* width: 100px; */
+        width: 200px;
+        object-fit: cover;
       }
     </style>
+   </div>
 </div>
 
 

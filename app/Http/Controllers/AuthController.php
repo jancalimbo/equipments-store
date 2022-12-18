@@ -16,7 +16,10 @@ class AuthController extends Controller
         if(auth()->check()){
             return redirect('/equipments/index');
         }
+    
         return view('authentication.login');
+
+
     }
 
     public function registerForm() {
@@ -40,6 +43,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'remember_token' => $token,
+            'role' => "customer",
         ])->assignRole('customer');
 
         Mail::send('authentication.verification-mail', ['user' => $user], function ($mail) use($user){
@@ -82,7 +86,12 @@ class AuthController extends Controller
         if(!$login) {
             return back()->with('error','Invalid user credentials.');
         }
-        return redirect('/equipments/index');
+
+        if($user->role == 'admin'){
+            return redirect('/equipments/index');
+        }elseif($user->role == 'customer'){
+            return redirect('/home');
+        }
         
     }
 

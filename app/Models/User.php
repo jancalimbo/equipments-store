@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Log;
+use App\Models\Cart;
+use App\Models\Equipments;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -22,8 +24,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role', 
         'password',
-        'remember_token' 
+        'remember_token' ,
     ];
 
      /* The attributes that should be hidden for serialization.
@@ -56,5 +59,13 @@ class User extends Authenticatable
         return User::whereHas('posts', function ($query) use($category_id){
             $query->where('category_id', $category_id);
         })->orderBy('username')->get();
+    }
+
+
+    public function cart(){
+        return $this->hasMany(Cart::class);
+    }
+    public function equipment(){
+        return $this->hasMany(Equipments::class);
     }
 }

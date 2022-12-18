@@ -24,7 +24,7 @@
     @include('components._navbar')
     
     
-    <div class="container mt-4">
+    <div class="">
         @include('sweetalert::alert')
         @yield('content')
     </div>

@@ -22,7 +22,7 @@
   
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" class="form-control" value="charlessaltzman@yahoo.com" >
+      <input type="email" name="email" id="email" class="form-control" value="customer@gmail.com" >
       @error('email')
         <p class="text-danger">{{ $message }}</p>
       @enderror
@@ -51,17 +51,17 @@
     #login-box{
         /* border: #FF4C29 2px solid; */
         border-radius: 10px;
-        background-color: #082032;
+        background-color: #1b1b1e;
         margin-top: 7em;
-        color: #FF4C29;
+        color: #96031a;
     }
     #login-btn{
-      background-color: #FF4C29;
+      background-color: #96031a;
       /* color: #082032; */
       color: white;
     }
     #register-link{
-      color: #FF4C29;
+      color: #96031a;
       /* text-decoration: none; */
       font-weight: bold;
     }

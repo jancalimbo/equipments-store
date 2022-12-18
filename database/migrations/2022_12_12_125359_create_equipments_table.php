@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('code')->unique();
             $table->string('name');
+            $table->integer('likes');
             $table->integer('stocks');
             $table->string('description')->nullable();
             $table->timestamps();

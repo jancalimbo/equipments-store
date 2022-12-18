@@ -19,44 +19,49 @@
                 </li> --}}
                 <li class="nav-item">
                     
-                   <a id="navbar-links" class="nav-link" href=""><i class="fa-solid fa-house"></i></a>
-                   
-                   
-                </li>
-                <li class="nav-item">
-                    
-                   <a id="navbar-links" class="nav-link" href=""><i class="fa-solid fa-dumbbell"></i></a>
-                   
-                   
-                </li>
-                <li class="nav-item">
-                    
-                   <a id="navbar-links" class="nav-link" href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                   
-                   
+                    <a id="navbar-links" class="nav-link" href="{{ route('home') }}"><i class="fa-solid fa-house"></i></a>   
                 </li>
 
                 
-                {{-- <li class="nav-item">
-                    <a id="navbar-links" class="nav-link" href="{{url('/logs')}}">Activity</a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a id="navbar-links" class="nav-link" href="{{url('/logout')}}">Logout &nbsp; <i class="fa-solid fa-right-to-bracket"></i></a>
-                </li> --}}
+                <li class="nav-item">
+                    
+                   <a id="navbar-links" class="nav-link" href="{{ route('cart') }}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        @php
+                            $count = App\Models\Cart::where('user_id', auth()->user()->id)->count();
+                        @endphp
+                        <div class="cart-count-div  ">
+                            <span class="cart-count">{{ $count }}</span>
+
+                        </div>
+                        
+                    </a>
+                </li>
+
+              
+                
+               
+                @endrole
+
+                @role('admin')
+                    <li class="nav-item">
+                        
+                        <a id="navbar-links" class="nav-link" href="{{ route('admin-index') }}">
+                            <span>
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <span>
+                                {{-- {{Auth::user()->name}} --}}
+                            </span>
+                        </a>
+                        
+                    </li>
                 @endrole
 
                 @hasanyrole('admin|customer')
                     <li class="nav-item">
                         
-                        <a id="navbar-links" class="nav-link" href="">
-                            <span>
-                                {{-- <i class="fa-solid fa-user"></i> --}}
-                            </span>
-                            <span>
-                                {{Auth::user()->name}}
-                            </span>
-                        </a>
-                        
+                        <a id="navbar-links" class="nav-link" href="{{ route('user-index') }}"><i class="fa-solid fa-dumbbell"></i></a>  
                         
                     </li>
                     <li class="nav-item">
@@ -79,7 +84,7 @@
     height: 80px;
     padding-left: 20px; 
     padding-right: 20px; 
-    background-color: #010202;
+    background-color: #1b1b1e;
 }
 .navbar-brand{
     font-size: 30px;
@@ -90,17 +95,33 @@ a.nav-link:link{
     font-weight: bold;
 }
 #navbar-link-title{
-    color: #4e598c;
+    color: #96031a;
     
     font-weight: bold;
 }
 a.nav-link:hover{
-    color: #4e598c;
+    color: white;
     
     font-weight: bold;
 }
 
 .nav-link{
     margin-left: 25px;
+    color: #faa916;
+}
+
+.cart-count-div .cart-count{
+    padding: 5px;
+    font-size: 10px;
+    position: relative;
+    top: -33px;
+    color: white;
+    right: -14px;
+    height: 10px;
+    border-radius: 50%;
+}
+.cart-count-div{
+    position: absolute;
+    
 }
 </style>

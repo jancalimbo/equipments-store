@@ -3,10 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\EquipmentsController;
 
 /*
@@ -30,17 +27,24 @@ Route::post('/login',[AuthController::class,'login']);
 Route::get('/logout',[AuthController::class,'logout']);
 
 
-
-
-//crud video routes
 Route::group(['middleware'=> ['auth', 'verified']],function(){
     
     Route::prefix('equipments')->group(function(){
         Route::controller(EquipmentsController::class)->group(function (){
-            Route::get('/index', 'index');
+            Route::get('/index', 'index')->name('admin-index')->middleware('role:admin');
             Route::get('/uindex', 'uindex')->name('user-index');
-            Route::get('/create', 'create')->name('add-to-inventory');
+            Route::get('/create', 'create')->name('add-to-inventory')->middleware('role:admin');
+            Route::get('/update/{equipment}', 'update')->name('update-item')->middleware('role:admin');
+            Route::get('/delete/{equipment}', 'delete')->name('delete-item')->middleware('role:admin');
+            Route::get('/like/{equipment}', 'like')->name('like');
+            Route::get('/add-to-cart/{equipment}', 'addToCart')->name('add-to-cart')->middleware('role:customer');
         });
+    });
+
+    Route::controller(SiteController::class)->group(function (){
+        Route::get('/home', 'home')->name('home')->middleware('role:customer');
+        Route::get('/cart', 'cart')->name('cart')->middleware('role:customer');
+        Route::get('/checkout', 'checkout')->name('checkout')->middleware('role:customer');
     });
     
 });

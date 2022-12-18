@@ -25,8 +25,9 @@ class Create extends Component
 
         $equipment = Equipments::create([
             'name' => $this->name,
-            'code' => Str::random(5),
+            'code' => strtoupper(Str::random(5)),
             'stocks' => $this->stocks,
+            'likes' => 0,
             'user_id' => auth()->user()->id,
             'description' => $this->description,
         ]);
